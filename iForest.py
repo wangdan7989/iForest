@@ -20,18 +20,30 @@ statelist = []
 for item in data.values:
     statelist.append(item[-1])
     traindata.append(item[0:-2])
-print(traindata)
-print(statelist)
+#print(traindata)
+#print(statelist)
 
 pca=PCA(n_components=2)
 newData=pca.fit_transform(traindata)
-features =[]
-for item in newData:
-    for i in item:
-
-
-data['newfeature'] =newData
 print(newData)
+features =[[] for i in range(len(newData[0]))]
+
+for item in newData:
+    for i in range(len(item)):
+        print(i)
+        features[i].append(item[i])
+
+for item in features:
+    print(item)
+
+featurscount = 0
+for j in range(len(features)):
+
+    featurscount = str(featurscount)
+    data[featurscount] = features[j]
+    featurscount = int(featurscount)+1
+#data['newfeature'] =newData
+#print(newData)
 #print (data.values[1][1])
 '''
 n_estimators:样本的数量，默认为100
@@ -60,7 +72,7 @@ data = data.fillna(0)
 
 
 #allfeatures
-#X_cols = [str(i+1) for i in range(40)]
+X_cols = [str(i+1) for i in range(int(featurscount))]
 
 #all_max（单数）
 '''
@@ -81,7 +93,7 @@ X_cols = tem
 
 print( data.shape)
 '''
-X_cols = ['newfeature']
+#X_cols = ['newfeature']
 # train
 print("train begain")
 '''
@@ -180,4 +192,4 @@ plt.plot(x2,abnormal,'r')
 #plt.show()
 
 #data.to_csv('data/outliers.csv', columns=["pred","anormalscore"], header=False)
-data.to_csv('data/dataforperiod/outallfeatures.csv', columns=["state","pred","anormalscore"], header=False)
+data.to_csv('data/dataforperiod/outallfeatures.csv', columns=["id","state","pred","anormalscore"], header=False)
